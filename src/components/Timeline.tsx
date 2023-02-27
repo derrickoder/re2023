@@ -1,11 +1,8 @@
 import TimelineEvent from './TimelineEvent'
-
-function getTimelineEvents(){
-    return [{'eventId': 1, 'eventName': 'Event 1'}, {'eventId': 2, 'eventName': 'Event 2'}];
-}
+import ApiEvent from '../api/Event'
 
 function Timeline(){
-    const timelineEvents = getTimelineEvents();
+    const timelineEvents = ApiEvent();
 
     return (
         <div>
