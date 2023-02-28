@@ -1,10 +1,9 @@
 import Timeline from './components/Timeline'
+import { css } from '@emotion/react'
 
 function App() {
   return (
     <div>
-      App
-
       <Timeline />
     </div>
   );

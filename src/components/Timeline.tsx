@@ -1,21 +1,38 @@
+import { IProject } from '../interface/IEvent'
+import { IEvent } from '../interface/IEvent'
 import TimelineEvent from './TimelineEvent'
+import '../css/Timeline.css'
 
-function getTimelineEvents(){
-    return [{'eventId': 1, 'eventName': 'Event 1'}, {'eventId': 2, 'eventName': 'Event 2'}];
-}
+const projectData: IProject = {
+    'id': 101,
+    'name': 'project 1',
+    'description': 'The quick brown fox jumped.',
+    'events': [
+        {'id': 11, 'name': 'Event 1', 'description': 'The quick brown fox.'},
+        {'id': 12, 'name': 'Event 2', 'description': 'The quick brown fox.'},
+        {'id': 13, 'name': 'Event 3', 'description': 'The quick brown fox.'},
+        {'id': 14, 'name': 'Event 4', 'description': 'The quick brown fox.'}
+    ]
+
+};
 
 function Timeline(){
-    const timelineEvents = getTimelineEvents();
-
     return (
         <div>
-            Timeline
+            <div>
+                {projectData.name} ({projectData.id})
+            </div>
+            <div>
+                {projectData.description}
+            </div>
 
+            <div className="eventCardContainer">
             {
-                timelineEvents.map(event => {
-                    return(<TimelineEvent eventId={event.eventId} eventName={event.eventName} />)
+                projectData.events.map(event => {
+                    return(<TimelineEvent {...event} />)
                 })
             }
+            </div>
 
         </div>
     );
