@@ -17,6 +17,8 @@ const projectData: IProject = {
 };
 
 function Timeline(){
+    const timelineEvents = getTimelineEvents();
+
     return (
         <div>
             <div>
