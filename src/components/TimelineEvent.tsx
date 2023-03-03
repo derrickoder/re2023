@@ -7,6 +7,10 @@ const TimelineEvent : FunctionComponent<IEventPlusAction> = (props) => {
         <div className="eventCard" onClick={() => props.onSelect(props.event.id)}>
             <p>{props.event.name} ({props.event.id})</p>
             <p>{props.event.description}</p>
+
+            <ul>
+                <li>Status</li>
+            </ul>
         </div>
     );
 }

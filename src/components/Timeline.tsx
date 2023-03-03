@@ -7,7 +7,7 @@ function Timeline({events, onSelect}:IEventsPlusAction){
         <div className="eventcard-container">
             {
                 events.map(event => {
-                    return(<TimelineEvent event={event} onSelect={onSelect} />)
+                    return(<TimelineEvent key={event.id} event={event} onSelect={onSelect} />)
                 })
             }
         </div>

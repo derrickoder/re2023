@@ -30,6 +30,7 @@ interface IEventProps{
 
 interface ISelectedEventId{
     id: number;
+    visible: boolean;
 }
 
 interface IEventDetails{
@@ -41,8 +42,30 @@ interface IEventDetails{
 
 interface ITask{
     id: number;
+    eventId: number;
     name: string;
     description: string;
+    users: IUser[];
+}
+
+interface ITaskComponentProps{
+    visible: boolean;
+    id: number;
+    closeModal: () => void;
+}
+
+interface ITaskCardMethods{
+    openModal: (id:number) => void;
+}
+
+interface IModalMethods{
+    //openModal?: (id:number) => void;
+    closeModal: () => void;
+}
+
+interface IUser{
+    id: number;
+    email: string;
 }
 
 interface ISelectedTaskId{
@@ -58,5 +81,9 @@ export type {
     ISelectedEventId,
     IEventDetails,
     ITask,
-    ISelectedTaskId
+    ISelectedTaskId,
+    IUser,
+    ITaskCardMethods,
+    ITaskComponentProps,
+    IModalMethods
 };
