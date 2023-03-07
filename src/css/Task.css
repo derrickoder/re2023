@@ -4,3 +4,8 @@
     margin:5px;
     width: 150px;;
 }
+
+.task-id{
+    font-weight:bold;
+    font-size:15px;
+}

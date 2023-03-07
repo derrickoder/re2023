@@ -30,7 +30,7 @@ interface IEventProps{
 
 interface ISelectedEventId{
     id: number;
-    visible: boolean;
+    visible?: boolean;
 }
 
 interface IEventDetails{
@@ -49,9 +49,10 @@ interface ITask{
 }
 
 interface ITaskComponentProps{
-    visible: boolean;
-    id: number;
-    closeModal: () => void;
+    eventId: number;
+    taskId: number;
+    visible?: boolean;
+    //closeModal: () => void;
 }
 
 interface ITaskCardMethods{

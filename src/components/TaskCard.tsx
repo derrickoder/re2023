@@ -1,22 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useState } from 'react'
 import { ITask, ITaskCardMethods } from '../interface/IEvent'
 import User from './User'
+import Task from './Task'
 import '../css/Task.css'
 
 function TaskCard(props: (ITask & ITaskCardMethods)){
-//    function TaskCard(props: ITask){
-    // const handleOpenTask = () => {
-    //     alert(props.id);
-    // };
+
+    // State
+    const [showTask, setShowTask] = useState(false)
+
+    // Methods
+    const displayTask = () => {
+        setShowTask(true);
+    };
 
     return(
-        <div className="task">
+        <div className="task"
+        css={css`
+            background-color: #FFF0F5;
+        `}
+        >
             <div
             css={css`
                 font-family:tahoma;
                 margin-bottom:3px;
                 cursor:pointer;
+                background-color: #FAF0E6;
             `}
             onClick={() => props.openModal(props.id)}
             >
@@ -29,10 +40,12 @@ function TaskCard(props: (ITask & ITaskCardMethods)){
                 })
             }
 
-            <ul>
+            {/* <ul>
                 <li>Task status</li>
                 <li>Target completion date</li>
-            </ul>
+            </ul> */}
+
+            
         </div>
     );
 }

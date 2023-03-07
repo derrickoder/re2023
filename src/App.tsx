@@ -36,10 +36,10 @@ function App() {
     <div>
       <div>
         Project: {project.id} &nbsp;&nbsp;
-        <input type="text" value={project.name}></input>
+        {project.name}
       </div>
       <div>
-        <textarea rows={5} cols={40}>{project.description}</textarea>
+        {project.description}
       </div>
 
       
@@ -48,17 +48,16 @@ function App() {
 
       <Timeline events={project.events} onSelect={onOpenModal} />
 
-      <Conversation />
       
       <Event id={selectedEventId} visible={showEventModal} closeModal={onCloseModal}/>
-      
-      <ul>
+            
+      {/* <ul>
           <li>Target date of completion</li>
           <li>People involved and their tasks</li>
           <li>Attachments</li>
           <li>Add event</li>
           <li>Conversation</li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

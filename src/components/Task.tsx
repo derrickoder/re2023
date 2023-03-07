@@ -2,26 +2,36 @@
 import { css } from '@emotion/react'
 import { ITaskComponentProps } from '../interface/IEvent'
 import Conversation from '../components/Conversation'
+import api from '../api/Event'
+import '../css/Task.css'
 
 function Task(props: ITaskComponentProps){
 
+    if(props.taskId === 0){
+        return(<div></div>);
+    }
+
     const showComponent = (props.visible) ? 'block' : 'none';
+
+    // API calls
+    let task = api.TaskForId(props.eventId, props.taskId);
 
     return(
         <div id="task"
             css={css`
                 display:${showComponent};
-                border:solid #333 1px;
-                padding:5px;
-                position:fixed;
-                left: 10px;
-                top: 10px;
-                width: 80%; /* Full width */
-                height: 80%; /* Full height */
-                background-color: #fff;
+                // border:solid #333 1px;
+                padding:15px;
+                margin:5px;
+                // position:fixed;
+                // left: 10px;
+                // top: 10px;
+                // width: 80%; /* Full width */
+                // height: 80%; /* Full height */
+                background-color: #d9d9d9;
             `}
         >
-            <div 
+            {/* <div 
                 css={css`
                     cursor:pointer;
                     color:#333;
@@ -32,19 +42,24 @@ function Task(props: ITaskComponentProps){
                 onClick={() => props.closeModal()}
             >
                 close
-            </div>
+            </div> */}
 
-            Task {props.id}
+            <div className="task-id">Task: {props.taskId}</div>
 
-            <Conversation />
+            
 
-            <ul>
+            <div>{task.name}</div>
+            <div>{task.description}</div>
+
+            {/* <Conversation /> */}
+
+            {/* <ul>
                 <li>People involved</li>
                 <li>Conversations</li>
                 <li>Attachments</li>
                 <li>Description of task</li>
                 <li>Target date of completion</li>
-            </ul>
+            </ul> */}
 
         </div>
     );

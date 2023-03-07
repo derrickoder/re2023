@@ -9,6 +9,8 @@ import TaskCard from './TaskCard'
 import Conversation from './Conversation'
 
 const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
+
+    // State
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
 
@@ -18,12 +20,15 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
 
     const showComponent = (props.visible) ? 'block' : 'none';
 
+    // API calls
     let event = api.EventDetails(props.id);
     let tasks = api.TasksForEvent(props.id);
 
+    // Functions
     const handleTaskCardModalOpen = (id:number) => {
         setSelectedTaskId(id);
         setShowTaskModal(true);
+        console.log('showTaskModal: ', showTaskModal);
     };
 
     const handleTaskCardModalClose = () => {
@@ -35,14 +40,14 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
         <div 
             css={css`
                 display:${showComponent};
-                border:solid #333 1px;
-                padding:5px;
-                position:fixed;
-                left: 10px;
-                top: 10px;
-                width: 80%; /* Full width */
-                height: 80%; /* Full height */
-                background-color: #fff;
+                // border:solid #333 1px;
+                // padding:5px;
+                // position:fixed;
+                // left: 10px;
+                // top: 10px;
+                // width: 80%; /* Full width */
+                // height: 80%; /* Full height */
+                background-color: #E0FFFF;
             `}
             className="event-details">
 
@@ -59,13 +64,10 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
                 close
             </div>
             
-            <div>Event {event.id}</div>
-            <input type="textbox" value={event.name}></input>
+            <div>Event: {event.id}</div>
+            {event.name}
             <div>
-                <div>Description</div>
-                <textarea cols={40} rows={7}>
-                    {event.description}
-                </textarea>
+                {event.description}
             </div>
             <h4>Tasks</h4>
 
@@ -89,20 +91,20 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
                 }
             </div>
 
-            <Conversation />
+            {/* <Conversation /> */}
 
-            <ul>
+            {/* <ul>
                 <li>Target date of completion</li>
                 <li>People involved and their tasks</li>
                 <li>Conversations</li>
                 <li>Edit event</li>
                 <li>Add task</li>
-            </ul>
+            </ul> */}
 
             <Task 
-                visible={showTaskModal} 
-                id={selectedTaskId}
-                closeModal={handleTaskCardModalClose}
+                visible={showTaskModal}
+                eventId={props.id}
+                taskId={selectedTaskId}
                 />
         </div>
     );
