@@ -5,6 +5,7 @@ import { IEventComponentProps } from '../interface/IEvent'
 import '../css/Event.css'
 import Task from './Task'
 import TaskCard from './TaskCard'
+import AddTask from './AddTask'
 
 const Event : FunctionComponent<IEventComponentProps> = (props) => {
     
@@ -13,7 +14,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
     const [selectedTaskId, setSelectedTaskId] = useState(0);
 
     // Functions
-    const handleTaskCardModalOpen = (id:number) => {
+    const onDisplayTaskCard = (id:number) => {
         setSelectedTaskId(id);
         setShowTaskModal(true);
     };
@@ -60,7 +61,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
 
             <div className="task-card-container">
                 {
-                    props.tasks.map(task => {
+                    props.tasks?.map(task => {
                         return (
                             <TaskCard 
                                 key={task.id} 
@@ -69,7 +70,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
                                 id={task.id} 
                                 name={task.name} 
                                 description={task.description} 
-                                openModal={handleTaskCardModalOpen}
+                                openModal={onDisplayTaskCard}
                                 />
                         )
                     })
@@ -89,6 +90,8 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
                 eventId={props.event.id}
                 taskId={selectedTaskId}
                 />
+
+            <AddTask addTask={props.addTask} eventId={props.event.id} />
         </div>
     );
 };

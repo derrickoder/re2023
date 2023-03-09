@@ -1,11 +1,10 @@
 import { FunctionComponent, useState, useEffect } from 'react'
-import { IProjectComponentProps, IEvent, IEventDetails, ITask, IProject } from '../interface/IEvent'
+import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput } from '../interface/IEvent'
 import Timeline from '../components/Timeline'
 import Event from '../components/Event'
 import api from '../api/Event';
 
 const Project: FunctionComponent<IProjectComponentProps> = (props) => {
-    console.log('project.tsx');
 
     // State
     const [stateShowEvent, setStateShowEvent] = useState(false);
@@ -32,23 +31,29 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     };
 
     const onAddEvent = () => {
-        alert('x');
         // open a form
         // add to state
-
+        const newEvent = { 
+            id: 5,
+            name: 'New event here!',
+            description: 'New event here!',
+            tasks: []};
+        setStateProjectEventData([...stateProjectEventData, newEvent]);
     };
 
-    // const onAddTask = () => {
-    //     const task = {
-    //         users: [{id:1, email:"test@test.com"}], 
-    //         eventId: 1, 
-    //         id:2, 
-    //         name:'task # 2', 
-    //         description: 'sed do eiusmod tempor incididunt ut labore et doloremagna aliqua magna aliqua magna aliqua.'};
-      
-    //     setEventTasks([...eventTasks, task]);
-    // };
-
+    const onAddTask = (input:IAddTaskMethodInput) => {
+        const nextTaskId = stateEventTaskData.length + 1;
+        const newTask = {
+            users: [{id:1, email:"test@test.com"},{id:2, email:"test2@test.com"}], 
+            eventId: input.EventId, 
+            id:nextTaskId, 
+            name: input.TaskName,
+            description: input.TaskDescription
+        };
+            
+        setStateEventTaskData([...stateEventTaskData, newTask]);
+    };
+    
     return(
         <div>
 
@@ -71,9 +76,10 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
             
             <Event
                 visible={stateShowEvent}
-                hideComponent={onHideEvent}
                 event={stateEventData}
                 tasks={stateEventTaskData}
+                hideComponent={onHideEvent}
+                addTask={onAddTask}
             /> 
                     
             {/* <ul>

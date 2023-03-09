@@ -60,7 +60,13 @@ function TasksForEvent(eventId:number): ITask[] {
     return [];
   }
   const event = allData.find(i => i.id === eventId) as IEventDetails;
-  return event.tasks;
+
+  if(event !== undefined && event.tasks !== undefined){
+    return event.tasks;
+  }
+  else{
+    return [] as ITask[];
+  }
 }
 
 function TaskForId(eventId:number, taskId:number): ITask {

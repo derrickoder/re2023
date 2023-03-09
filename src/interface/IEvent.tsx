@@ -74,19 +74,18 @@ interface ISelectedTaskId{
     id: number;
 }
 
-interface IEventComponentProps{
-    //id:number;
-    visible:boolean;
-    hideComponent: () => void;
-    event:IEventDetails;
-    tasks:ITask[];
-    //addTask: () => void;
-}
-
 interface IProjectComponentProps{
     projectId:number;
     projectName:string;
     projectDescription:string;
+}
+
+interface IEventComponentProps{
+    visible:boolean;
+    hideComponent: () => void;
+    event:IEventDetails;
+    tasks?:ITask[];
+    addTask: (input:IAddTaskMethodInput) => void;
 }
 
 interface ITimelineComponentProps{
@@ -98,6 +97,17 @@ interface ITimelineComponentProps{
 interface TimelineEventComponentProps{
     event:IEvent;
     timelineEventClick: (id:number) => void;
+}
+
+interface IAddTaskComponentProps{
+    eventId:number;
+    addTask: (input:IAddTaskMethodInput) => void;
+}
+
+interface IAddTaskMethodInput {
+    EventId:number;
+    TaskName:string;
+    TaskDescription:string;
 }
 
 export type {
@@ -118,4 +128,6 @@ export type {
     IProjectComponentProps,
     ITimelineComponentProps,
     TimelineEventComponentProps,
+    IAddTaskComponentProps,
+    IAddTaskMethodInput,
 };
