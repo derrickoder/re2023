@@ -1,36 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { FunctionComponent, useState, useEffect } from 'react'
-import { IEventComponentProps, IEventDetails } from '../interface/IEvent'
+import { FunctionComponent, useState } from 'react'
+import { IEventComponentProps } from '../interface/IEvent'
 import '../css/Event.css'
 import Task from './Task'
 import TaskCard from './TaskCard'
-import api from '../api/Event';
 
 const Event : FunctionComponent<IEventComponentProps> = (props) => {
     
     // State
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
-    //const [eventDetails, setEventDetails] = useState({} as IEventDetails);
-
-    // useEffect(()=>{
-    //     //if(props.id !== 0){
-    //         let eventData = api.EventDetails(props.id);
-    //         console.log("eventData",eventData);
-    //         setEventDetails(eventData);
-    //     //}
-    // }, [])    
-
-    // if(props.id === 0 || !props.visible){
-    //     return(<div>no id</div>);
-    // }
 
     // Functions
     const handleTaskCardModalOpen = (id:number) => {
         setSelectedTaskId(id);
         setShowTaskModal(true);
-        
     };
 
     return(
@@ -62,13 +47,13 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
             </div>
             
             <div>Event: {props.event.id}</div>
-            {props.event.name}
-            <div>Event: {props.event.id}</div>
-            {props.event.name}
+
+            <div>{props.event.name}</div>
+
             <div>
                 {props.event.description}
-                {props.event.description}
             </div>
+
             <h4>Tasks</h4>
 
             <button>Add Task</button>
