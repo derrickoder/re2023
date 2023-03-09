@@ -5,6 +5,7 @@ import Event from '../components/Event'
 import api from '../api/Event';
 
 const Project: FunctionComponent<IProjectComponentProps> = (props) => {
+    console.log('project.tsx');
 
     // State
     const [stateShowEvent, setStateShowEvent] = useState(false);
@@ -35,6 +36,17 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
         // open a form
         // add to state
 
+    };
+
+    const onAddTask = () => {
+        const task = {
+            users: [{id:1, email:"test@test.com"}], 
+            eventId: 1, 
+            id:2, 
+            name:'task # 2', 
+            description: 'sed do eiusmod tempor incididunt ut labore et doloremagna aliqua magna aliqua magna aliqua.'};
+      
+        setEventTasks([...eventTasks, task]);
     };
 
     return(

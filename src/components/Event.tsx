@@ -63,12 +63,15 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
             
             <div>Event: {props.event.id}</div>
             {props.event.name}
+            <div>Event: {props.event.id}</div>
+            {props.event.name}
             <div>
+                {props.event.description}
                 {props.event.description}
             </div>
             <h4>Tasks</h4>
 
-            <button>Add Task</button>
+            <button onClick={props.addTask}>Add Task</button>
 
             <div className="task-card-container">
                 {
@@ -98,6 +101,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
 
             <Task 
                 visible={showTaskModal}
+                eventId={props.event.id}
                 eventId={props.event.id}
                 taskId={selectedTaskId}
                 />
