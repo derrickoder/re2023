@@ -2,7 +2,7 @@ interface IProject {
     id: number;
     name: string;
     description: string;
-    events: IEvent[];
+    events?: IEvent[];
 }
 
 interface IEvent {
@@ -80,6 +80,7 @@ interface IEventComponentProps{
     hideComponent: () => void;
     event:IEventDetails;
     tasks:ITask[];
+    addTask: () => void;
 }
 
 interface IProjectComponentProps{

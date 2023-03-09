@@ -12,18 +12,23 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
     // State
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
-    const [eventDetails, setEventDetails] = useState({} as IEventDetails);
+    // const [eventDetails, setEventDetails] = useState({} as IEventDetails);
 
-    useEffect(()=>{
-        //if(props.id !== 0){
-            let eventData = api.EventDetails(props.id);
-            console.log("eventData",eventData);
-            setEventDetails(eventData);
-        //}
-    }, [])    
+    // useEffect(()=>{
+    //     //if(props.id !== 0){
+    //         let eventData = api.EventDetails(props.id);
+    //         console.log("eventData",eventData);
+    //         setEventDetails(eventData);
+    //     //}
+    // }, [])
+
+    console.log("Event.tsx - props.id", props.id);
+    
+    //let eventDetails = api.EventDetails(props.id);
+    
 
     if(props.id === 0 || !props.visible){
-        return(<div></div>);
+        return(null);
     }
 
     // Functions
@@ -61,14 +66,14 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
                 close
             </div>
             
-            <div>Event: {eventDetails.id}</div>
-            {eventDetails.name}
+            <div>Event: {props.event.id}</div>
+            {props.event.name}
             <div>
-                {eventDetails.description}
+                {props.event.description}
             </div>
             <h4>Tasks</h4>
 
-            <button>Add Task</button>
+            <button onClick={props.addTask}>Add Task</button>
 
             <div className="task-card-container">
                 {
@@ -98,7 +103,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
 
             <Task 
                 visible={showTaskModal}
-                eventId={eventDetails.id}
+                eventId={props.event.id}
                 taskId={selectedTaskId}
                 />
         </div>

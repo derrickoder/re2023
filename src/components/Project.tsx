@@ -5,6 +5,7 @@ import Event from '../components/Event'
 import api from '../api/Event';
 
 const Project: FunctionComponent<IProjectComponentProps> = (props) => {
+    console.log('project.tsx');
 
     // State
     const [showEventModal, setShowEventModal] = useState(false);
@@ -33,6 +34,17 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
         alert('x');
     };
 
+    const onAddTask = () => {
+        const task = {
+            users: [{id:1, email:"test@test.com"}], 
+            eventId: 1, 
+            id:2, 
+            name:'task # 2', 
+            description: 'sed do eiusmod tempor incididunt ut labore et doloremagna aliqua magna aliqua magna aliqua.'};
+      
+        setEventTasks([...eventTasks, task]);
+    };
+
     return(
         <div>
 
@@ -58,7 +70,8 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 hideComponent={onCloseEvent}
                 event={eventDetails}
                 tasks={eventTasks}
-            /> 
+                addTask={onAddTask}
+                /> 
                     
             {/* <ul>
                 <li>Target date of completion</li>

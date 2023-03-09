@@ -14,6 +14,8 @@ function App() {
     setProjectData(project);
 	}, [])
 
+  console.log('app.tsx');
+
   return (
     <div>
 

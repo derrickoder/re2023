@@ -70,11 +70,12 @@ function TaskForId(eventId:number, taskId:number): ITask {
 }
 
 const ProjectDetails = (projectId:number): IProject => {
-  return projectData;
+  const project =  projectData;
+  return { id:project.id, name:project.name, description:project.description } as IProject;
 };
 
 const EventsForProject = (projectId:number): IEvent[] => {
-  return projectData.events;
+  return projectData.events as IEvent[];
 };
 
 export default {
