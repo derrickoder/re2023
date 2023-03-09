@@ -75,7 +75,7 @@ interface ISelectedTaskId{
 }
 
 interface IEventComponentProps{
-    id:number;
+    //id:number;
     visible:boolean;
     hideComponent: () => void;
     event:IEventDetails;
@@ -91,6 +91,7 @@ interface IProjectComponentProps{
 interface ITimelineComponentProps{
     timelineEventClick: (id:number) => void;
     projectId:number;
+    events:IEvent[];
 }
 
 interface TimelineEventComponentProps{

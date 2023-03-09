@@ -7,30 +7,34 @@ import api from '../api/Event';
 const Project: FunctionComponent<IProjectComponentProps> = (props) => {
 
     // State
-    const [showEventModal, setShowEventModal] = useState(false);
-    const [selectedEventId, setSelectedEventId] = useState(0);
-    const [eventDetails, setEventDetails] = useState({} as IEventDetails);
-    const [eventTasks, setEventTasks] = useState([] as ITask[]);
+    const [stateShowEvent, setStateShowEvent] = useState(false);
+    const [stateEventData, setStateEventData] = useState({} as IEventDetails);
+    const [stateEventTaskData, setStateEventTaskData] = useState([] as ITask[]);
+    const [stateProjectEventData, setStateProjectEventData] = useState([] as IEvent[]);
+
+    useEffect(()=>{
+        const projectEventsData = api.EventsForProject(props.projectId);
+        setStateProjectEventData(projectEventsData);
+    }, [])
 
     // Methods
     const onTimelineEventClick = (id:number) => {
-        setSelectedEventId(id);
-        setShowEventModal(true);
-
         let eventData = api.EventDetails(id);
         let tasksData = api.TasksForEvent(id);
-        
-        setEventDetails(eventData);
-        setEventTasks([...tasksData]);
+        setStateEventData(eventData);
+        setStateEventTaskData([...tasksData]);
+        setStateShowEvent(true);
     };
 
-    const onCloseEvent = () => {
-        setSelectedEventId(0);
-        setShowEventModal(false);
+    const onHideEvent = () => {
+        setStateShowEvent(false);
     };
 
-    const onAddEventClick = () => {
+    const onAddEvent = () => {
         alert('x');
+        // open a form
+        // add to state
+
     };
 
     return(
@@ -45,19 +49,19 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 {props.projectDescription}
             </div>
 
-            <button onClick={onAddEventClick}>Add Event</button>
+            <button onClick={onAddEvent}>Add Event</button>
 
             <Timeline 
                 projectId={props.projectId}
                 timelineEventClick={onTimelineEventClick} 
+                events={stateProjectEventData}
             />
             
             <Event
-                id={selectedEventId} 
-                visible={showEventModal}
-                hideComponent={onCloseEvent}
-                event={eventDetails}
-                tasks={eventTasks}
+                visible={stateShowEvent}
+                hideComponent={onHideEvent}
+                event={stateEventData}
+                tasks={stateEventTaskData}
             /> 
                     
             {/* <ul>

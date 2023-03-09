@@ -6,18 +6,18 @@ import api from '../api/Event';
 
 const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
 
-    // State
-    const[projectEvents, setProjectEvents] = useState([] as IEvent[]);
+    // // State
+    // const[projectEvents, setProjectEvents] = useState([] as IEvent[]);
 
-    useEffect(()=>{
-        const projectEventsData = api.EventsForProject(props.projectId);
-        setProjectEvents(projectEventsData);
-    }, [])
+    // useEffect(()=>{
+    //     const projectEventsData = api.EventsForProject(props.projectId);
+    //     setProjectEvents(projectEventsData);
+    // }, [])
 
     return (
         <div className="event-card-container">
             {
-                projectEvents.map(event => {
+                props.events.map(event => {
                     return(<TimelineEvent key={event.id} event={event} timelineEventClick={props.timelineEventClick} />)
                 })
             }
