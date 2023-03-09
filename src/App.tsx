@@ -1,63 +1,28 @@
-import Timeline from './components/Timeline'
-import Event from './components/Event'
-import Conversation from './components/Conversation'
-import { IProject } from './interface/IEvent'
-import { IEventsPlusAction, ISelectedEventId } from './interface/IEvent';
-import React, { useState } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react'
+import Project from './components/Project'
+import { IProject, IEvent } from './interface/IEvent'
+import api from './api/Event';
 
 function App() {
 
-  const [showEventModal, setShowEventModal] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState(0);
+  // State
+  const [projectData, setProjectData] = useState({} as IProject);
 
-  const onOpenModal = (id:number) => {
-    setSelectedEventId(id);
-    setShowEventModal(true);
-  };
-
-  const onCloseModal = () => {
-    setSelectedEventId(0);
-    setShowEventModal(false);
-  };
-
-  const project: IProject = {
-    'id': 101,
-    'name': 'Project RE (beta)',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    'events': [
-      {'id': 1, 'name': 'Event 1', 'description': 'The quick brown fox.'},
-      {'id': 2, 'name': 'Event 2', 'description': 'The quick brown fox.'},
-      {'id': 3, 'name': 'Event 3', 'description': 'The quick brown fox.'},
-      {'id': 4, 'name': 'Event 4', 'description': 'The quick brown fox.'}
-    ]
-  };
+  useEffect(()=>{
+		const project = api.ProjectDetails(101);
+    setProjectData(project);
+	}, [])
 
   return (
     <div>
-      <div>
-        Project: {project.id} &nbsp;&nbsp;
-        {project.name}
-      </div>
-      <div>
-        {project.description}
-      </div>
 
-      
+      <Project 
+        projectId={projectData.id}
+        projectName={projectData.name}
+        projectDescription={projectData.description}
+        />
 
-      <button>+ Add Event</button>
-
-      <Timeline events={project.events} onSelect={onOpenModal} />
-
-      
-      <Event id={selectedEventId} visible={showEventModal} closeModal={onCloseModal}/>
-            
-      {/* <ul>
-          <li>Target date of completion</li>
-          <li>People involved and their tasks</li>
-          <li>Attachments</li>
-          <li>Add event</li>
-          <li>Conversation</li>
-      </ul> */}
     </div>
   );
 }

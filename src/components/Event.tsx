@@ -1,45 +1,42 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import {FunctionComponent, useState} from 'react'
-import {ISelectedEventId, IModalMethods} from '../interface/IEvent'
-import api from '../api/Event';
+import { FunctionComponent, useState, useEffect } from 'react'
+import { IEventComponentProps, IEventDetails } from '../interface/IEvent'
 import '../css/Event.css'
 import Task from './Task'
 import TaskCard from './TaskCard'
-import Conversation from './Conversation'
+import api from '../api/Event';
 
-const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
-
+const Event : FunctionComponent<IEventComponentProps> = (props) => {
+    
     // State
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
+    const [eventDetails, setEventDetails] = useState({} as IEventDetails);
 
-    if(props.id === 0){
+    useEffect(()=>{
+        //if(props.id !== 0){
+            let eventData = api.EventDetails(props.id);
+            console.log("eventData",eventData);
+            setEventDetails(eventData);
+        //}
+    }, [])    
+
+    if(props.id === 0 || !props.visible){
         return(<div></div>);
     }
-
-    const showComponent = (props.visible) ? 'block' : 'none';
-
-    // API calls
-    let event = api.EventDetails(props.id);
-    let tasks = api.TasksForEvent(props.id);
 
     // Functions
     const handleTaskCardModalOpen = (id:number) => {
         setSelectedTaskId(id);
         setShowTaskModal(true);
-        console.log('showTaskModal: ', showTaskModal);
-    };
-
-    const handleTaskCardModalClose = () => {
-        setSelectedTaskId(0);
-        setShowTaskModal(false);
+        
     };
 
     return(
         <div 
             css={css`
-                display:${showComponent};
+                display:${(props.visible) ? 'block' : 'none'};
                 // border:solid #333 1px;
                 // padding:5px;
                 // position:fixed;
@@ -59,23 +56,23 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
                     font-family:tahoma;
                     margin-bottom:5px;
                 `}
-                onClick={() => props.closeModal()}
+                onClick={() => props.hideComponent()}
             >
                 close
             </div>
             
-            <div>Event: {event.id}</div>
-            {event.name}
+            <div>Event: {eventDetails.id}</div>
+            {eventDetails.name}
             <div>
-                {event.description}
+                {eventDetails.description}
             </div>
             <h4>Tasks</h4>
 
-            <button>+ Add Task</button>
+            <button>Add Task</button>
 
             <div className="task-card-container">
                 {
-                    tasks.map(task => {
+                    props.tasks.map(task => {
                         return (
                             <TaskCard 
                                 key={task.id} 
@@ -91,8 +88,6 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
                 }
             </div>
 
-            {/* <Conversation /> */}
-
             {/* <ul>
                 <li>Target date of completion</li>
                 <li>People involved and their tasks</li>
@@ -103,7 +98,7 @@ const Event : FunctionComponent<ISelectedEventId & IModalMethods> = (props) => {
 
             <Task 
                 visible={showTaskModal}
-                eventId={props.id}
+                eventId={eventDetails.id}
                 taskId={selectedTaskId}
                 />
         </div>

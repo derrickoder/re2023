@@ -1,9 +1,10 @@
 interface IProject {
     id: number;
     name: string;
-    events: IEvent[];
     description: string;
+    events: IEvent[];
 }
+
 interface IEvent {
     id: number;
     name: string;
@@ -73,6 +74,30 @@ interface ISelectedTaskId{
     id: number;
 }
 
+interface IEventComponentProps{
+    id:number;
+    visible:boolean;
+    hideComponent: () => void;
+    event:IEventDetails;
+    tasks:ITask[];
+}
+
+interface IProjectComponentProps{
+    projectId:number;
+    projectName:string;
+    projectDescription:string;
+}
+
+interface ITimelineComponentProps{
+    timelineEventClick: (id:number) => void;
+    projectId:number;
+}
+
+interface TimelineEventComponentProps{
+    event:IEvent;
+    timelineEventClick: (id:number) => void;
+}
+
 export type {
     IEvent,
     IEvents,
@@ -86,5 +111,9 @@ export type {
     IUser,
     ITaskCardMethods,
     ITaskComponentProps,
-    IModalMethods
+    IModalMethods,
+    IEventComponentProps,
+    IProjectComponentProps,
+    ITimelineComponentProps,
+    TimelineEventComponentProps,
 };

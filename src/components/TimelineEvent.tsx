@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import React, {FunctionComponent} from 'react'
-import { IEventPlusAction } from '../interface/IEvent';
+import { FunctionComponent } from 'react'
+import { TimelineEventComponentProps } from '../interface/IEvent';
 import '../css/TimelineEvent.css'
 
-const TimelineEvent : FunctionComponent<IEventPlusAction> = (props) => {
+const TimelineEvent : FunctionComponent<TimelineEventComponentProps> = (props) => {
     return (
         <div className="eventCard" 
-            onClick={() => props.onSelect(props.event.id)}
+            onClick={() => props.timelineEventClick(props.event.id)}
             css={css`
                 background-color:#FFA07A;
                 cursor:pointer;

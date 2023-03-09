@@ -1,4 +1,16 @@
-import { IEventDetails, ITask } from '../interface/IEvent'
+import { IProject, IEvent, IEventDetails, ITask } from '../interface/IEvent'
+
+const projectData: IProject = {
+  'id': 101,
+  'name': 'Project RE (beta)',
+  'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  'events': [
+    {'id': 1, 'name': 'Event 1', 'description': 'The quick brown fox.'},
+    {'id': 2, 'name': 'Event 2', 'description': 'The quick brown fox.'},
+    {'id': 3, 'name': 'Event 3', 'description': 'The quick brown fox.'},
+    {'id': 4, 'name': 'Event 4', 'description': 'The quick brown fox.'}
+  ]
+};
 
 const allData: IEventDetails[] = [
   { id: 1,
@@ -57,8 +69,18 @@ function TaskForId(eventId:number, taskId:number): ITask {
   return task;
 }
 
+const ProjectDetails = (projectId:number): IProject => {
+  return projectData;
+};
+
+const EventsForProject = (projectId:number): IEvent[] => {
+  return projectData.events;
+};
+
 export default {
   EventDetails,
   TasksForEvent,
-  TaskForId
+  TaskForId,
+  ProjectDetails,
+  EventsForProject
 };
