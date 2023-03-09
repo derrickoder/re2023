@@ -80,7 +80,7 @@ interface IEventComponentProps{
     hideComponent: () => void;
     event:IEventDetails;
     tasks:ITask[];
-    addTask: () => void;
+    //addTask: () => void;
 }
 
 interface IProjectComponentProps{

@@ -38,16 +38,16 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
 
     };
 
-    const onAddTask = () => {
-        const task = {
-            users: [{id:1, email:"test@test.com"}], 
-            eventId: 1, 
-            id:2, 
-            name:'task # 2', 
-            description: 'sed do eiusmod tempor incididunt ut labore et doloremagna aliqua magna aliqua magna aliqua.'};
+    // const onAddTask = () => {
+    //     const task = {
+    //         users: [{id:1, email:"test@test.com"}], 
+    //         eventId: 1, 
+    //         id:2, 
+    //         name:'task # 2', 
+    //         description: 'sed do eiusmod tempor incididunt ut labore et doloremagna aliqua magna aliqua magna aliqua.'};
       
-        setEventTasks([...eventTasks, task]);
-    };
+    //     setEventTasks([...eventTasks, task]);
+    // };
 
     return(
         <div>

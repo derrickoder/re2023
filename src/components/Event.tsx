@@ -71,7 +71,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
             </div>
             <h4>Tasks</h4>
 
-            <button onClick={props.addTask}>Add Task</button>
+            <button>Add Task</button>
 
             <div className="task-card-container">
                 {
@@ -101,7 +101,6 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
 
             <Task 
                 visible={showTaskModal}
-                eventId={props.event.id}
                 eventId={props.event.id}
                 taskId={selectedTaskId}
                 />
