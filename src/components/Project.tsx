@@ -57,8 +57,11 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     return(
         <div>
 
-            <div>
+            <div className="component-id">
                 Project: {props.projectId} &nbsp;&nbsp;
+            </div>
+
+            <div>
                 {props.projectName}
             </div>
 
@@ -73,14 +76,18 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 timelineEventClick={onTimelineEventClick} 
                 events={stateProjectEventData}
             />
-            
-            <Event
-                visible={stateShowEvent}
-                event={stateEventData}
-                tasks={stateEventTaskData}
-                hideComponent={onHideEvent}
-                addTask={onAddTask}
-            /> 
+
+            {
+                stateShowEvent && (
+                    <Event
+                        visible={stateShowEvent}
+                        event={stateEventData}
+                        tasks={stateEventTaskData}
+                        hideComponent={onHideEvent}
+                        addTask={onAddTask}
+                    /> 
+                )
+            }
                     
             {/* <ul>
                 <li>Target date of completion</li>

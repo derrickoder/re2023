@@ -1,5 +1,6 @@
 .eventCard{
-    border:solid #777 1px;
     padding: 5px;
-    margin:5px;
+    margin:7px;
+    background-color:lightgrey;
+    cursor:pointer;
 }

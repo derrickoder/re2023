@@ -8,17 +8,8 @@ const TimelineEvent : FunctionComponent<TimelineEventComponentProps> = (props) =
     return (
         <div className="eventCard" 
             onClick={() => props.timelineEventClick(props.event.id)}
-            css={css`
-                background-color:#FFA07A;
-                cursor:pointer;
-            `}
             >
-            <p>{props.event.name} ({props.event.id})</p>
-            <p>{props.event.description}</p>
-
-            <ul>
-                <li>Status</li>
-            </ul>
+            <div css={css`font-size:12px;font-weight:bold;padding:10px;`}>{props.event.name}</div>
         </div>
     );
 }

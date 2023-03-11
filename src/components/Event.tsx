@@ -47,7 +47,7 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
                 close
             </div>
             
-            <div>Event: {props.event.id}</div>
+            <div className="component-id">Event: {props.event.id}</div>
 
             <div>{props.event.name}</div>
 
@@ -55,7 +55,9 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
                 {props.event.description}
             </div>
 
-            <h4>Tasks</h4>
+            <hr css={css`margin-top:25px;`}></hr>
+
+            <h3>Tasks</h3>
 
             <button>Add Task</button>
 
