@@ -1,8 +1,9 @@
 import { FunctionComponent, useState, useEffect } from 'react'
-import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput } from '../interface/IEvent'
+import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput, IEventFormData } from '../interface/IEvent'
 import Timeline from '../components/Timeline'
 import Event from '../components/Event'
 import api from '../api/Event';
+import GenericDrawer from '../components/GenericDrawer';
 
 const Project: FunctionComponent<IProjectComponentProps> = (props) => {
 
@@ -11,6 +12,7 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     const [stateEventData, setStateEventData] = useState({} as IEventDetails);
     const [stateEventTaskData, setStateEventTaskData] = useState([] as ITask[]);
     const [stateProjectEventData, setStateProjectEventData] = useState([] as IEvent[]);
+    const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(()=>{
         const projectEventsData = api.EventsForProject(props.projectId);
@@ -30,15 +32,20 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
         setStateShowEvent(false);
     };
 
-    const onAddEvent = () => {
+    const onOpenForm = () => {
         // open a form
+        onToggleDrawer();
+    };
+
+    const onAddEvent = (formData:IEventFormData) => {
         // add to state
         const newEvent = { 
             id: 5,
-            name: 'New event here!',
-            description: 'New event here!',
+            name: formData.name,
+            description: formData.description,
             tasks: []};
         setStateProjectEventData([...stateProjectEventData, newEvent]);
+        onToggleDrawer();
     };
 
     const onAddTask = (input:IAddTaskMethodInput) => {
@@ -53,6 +60,14 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
             
         setStateEventTaskData([...stateEventTaskData, newTask]);
     };
+
+    const onToggleDrawer = () => {
+        setOpenDrawer(!openDrawer);
+    };
+
+    const onRefreshData = (isUpdated:boolean) => {
+        alert('refresh the data');
+    }
     
     return(
         <div>
@@ -69,7 +84,7 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 {props.projectDescription}
             </div>
 
-            <button onClick={onAddEvent}>Add Event</button>
+            <button onClick={onOpenForm}>Add Event</button>
 
             <Timeline 
                 projectId={props.projectId}
@@ -89,13 +104,14 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 )
             }
                     
-            {/* <ul>
-                <li>Target date of completion</li>
-                <li>People involved and their tasks</li>
-                <li>Attachments</li>
-                <li>Add event</li>
-                <li>Conversation</li>
-            </ul> */}
+            <GenericDrawer 
+                open={openDrawer}
+                componentHeading="New Event"
+                component="EventForm"
+                toggleDrawer={onToggleDrawer} 
+                refreshData={onRefreshData}
+                addEvent={onAddEvent}
+                />
 
         </div>
     );

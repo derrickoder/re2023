@@ -19,8 +19,11 @@ const Blog = () => {
 
             <button onClick={onOpenDrawer}>Open Drawer</button>
 
-            <Drawer open={openDrawer} >
-                <div css={css`width:350px;`}>
+            <Drawer 
+                open={openDrawer} 
+                anchor="right"
+                >
+                <div css={css`width:400px;`}>
                     <button onClick={onOpenDrawer}>Close Drawer</button>
                     test
                 </div>

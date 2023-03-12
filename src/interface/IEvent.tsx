@@ -110,6 +110,24 @@ interface IAddTaskMethodInput {
     TaskDescription:string;
 }
 
+interface IGenericDrawer{
+    open:boolean;
+    componentHeading:string,
+    component:string;
+    toggleDrawer: () => void;
+    refreshData: (isUpdated:boolean) => void;
+    addEvent: (formData:IEventFormData) => void;
+}
+
+interface IEventFormComponent{
+    addEvent: (formData:IEventFormData) => void;
+}
+
+interface IEventFormData{
+    name:string;
+    description:string;
+}
+
 export type {
     IEvent,
     IEvents,
@@ -130,4 +148,7 @@ export type {
     TimelineEventComponentProps,
     IAddTaskComponentProps,
     IAddTaskMethodInput,
+    IGenericDrawer,
+    IEventFormComponent,
+    IEventFormData,
 };

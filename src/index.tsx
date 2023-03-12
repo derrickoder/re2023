@@ -20,7 +20,6 @@ root.render(
   <React.StrictMode>
     <React.Fragment>
 
-
       <Container maxWidth="xl">
         <BrowserRouter>
           
@@ -37,7 +36,6 @@ root.render(
 
           <App />
         </BrowserRouter>
-
 
       </Container>
 
