@@ -86,6 +86,9 @@ interface IEventComponentProps{
     event:IEventDetails;
     tasks?:ITask[];
     addTask: (input:IAddTaskMethodInput) => void;
+    toggleDrawer: (component:string, componentAction:string) => void;
+    editTask: (taskId:number) => void;
+    editEvent: (eventId:number) => void;
 }
 
 interface ITimelineComponentProps{
@@ -101,32 +104,59 @@ interface TimelineEventComponentProps{
 
 interface IAddTaskComponentProps{
     eventId:number;
+    taskId:number;
     addTask: (input:IAddTaskMethodInput) => void;
+    componentAction:string;
 }
 
 interface IAddTaskMethodInput {
     EventId:number;
+    TaskId:number;
     TaskName:string;
     TaskDescription:string;
 }
 
 interface IGenericDrawer{
     open:boolean;
-    componentHeading:string,
     component:string;
-    toggleDrawer: () => void;
-    refreshData: (isUpdated:boolean) => void;
-    addEvent: (formData:IEventFormData) => void;
+    componentHeading:string,
+    componentAction?:string;
+    eventId?:number;
+    taskId?:number;
+    toggleDrawer: (component:string, componentAction:string) => void;
+    addProject?: (formData:IProjectFormData) => void;
+    addEvent?: (formData:IEventFormData) => void;
+    addTask?: (formData:IAddTaskMethodInput) => void;
 }
 
 interface IEventFormComponent{
     addEvent: (formData:IEventFormData) => void;
+    eventId:number;
+    componentAction:string;
 }
 
 interface IEventFormData{
+    eventId:number;
     name:string;
     description:string;
 }
+
+interface IProjectFormData{
+    name:string;
+    description:string;
+}
+
+interface IProjectFormComponent{
+    addProject: (formData:IProjectFormData) => void;
+}
+
+interface ITaskCardComponentProps{
+    id:number;
+    name:string;
+    description:string;
+    editTask:(taskId:number) => void;
+}
+
 
 export type {
     IEvent,
@@ -151,4 +181,7 @@ export type {
     IGenericDrawer,
     IEventFormComponent,
     IEventFormData,
+    IProjectFormComponent,
+    IProjectFormData,
+    ITaskCardComponentProps,
 };

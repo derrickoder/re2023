@@ -1,23 +1,44 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { FunctionComponent, useState } from 'react'
-import { IEventComponentProps } from '../interface/IEvent'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import AddSharp from '@mui/icons-material/AddSharp';
+import CloseSharp from '@mui/icons-material/CloseSharp';
+import EditSharp from '@mui/icons-material/EditSharp';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { Box } from '@mui/material';
+
+
+
 import '../css/Event.css'
+import { IEventComponentProps } from '../interface/IEvent'
 import Task from './Task'
 import TaskCard from './TaskCard'
-import AddTask from './AddTask'
+import TaskCard2 from './TaskCard2'
+
 
 const Event : FunctionComponent<IEventComponentProps> = (props) => {
     
     // State
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
+    const [openDrawer, setOpenDrawer] = useState(false);
 
     // Functions
     const onDisplayTaskCard = (id:number) => {
         setSelectedTaskId(id);
         setShowTaskModal(true);
     };
+
+    const onToggleDrawer = () => {
+        setOpenDrawer(!openDrawer);
+    };
+
+    const onRefreshData = (isUpdated:boolean) => {
+        alert('refresh the data');
+    }
 
     return(
         <div 
@@ -34,66 +55,74 @@ const Event : FunctionComponent<IEventComponentProps> = (props) => {
             `}
             className="event-details">
 
-            <div 
-                css={css`
-                    cursor:pointer;
-                    color:#333;
-                    font-size:12px;
-                    font-family:tahoma;
-                    margin-bottom:5px;
-                `}
-                onClick={() => props.hideComponent()}
-            >
-                close
-            </div>
+            <Box sx={{float:"right"}}>
+                <IconButton 
+                    aria-label="edit"
+                    onClick={props.hideComponent}>
+                    <CloseSharp />
+                </IconButton>
+            </Box>
+
+            <Box sx={{padding:2}}>
+                <Typography variant='subtitle2' color="text.secondary">
+                    Event: {props.event.id}
+
+                    <IconButton 
+                    aria-label="edit"
+                    onClick={() => props.editEvent(props.event.id)}>
+                    <EditSharp />
+                </IconButton>
+                </Typography>
+                <Typography variant="h6">
+                    {props.event.name}
+                </Typography>
+                <Typography>
+                    {props.event.description}
+                </Typography>
+            </Box>
+
+            <Box sx={{padding:2}}>
+                <Typography variant="h5">
+                    Tasks
+                </Typography>
+
+                <div className="task-card-container">
+                    {
+                        props.tasks?.map(task => {
+                            return (
+                                <TaskCard2
+                                    id={task.id} 
+                                    name={task.name} 
+                                    description={task.description} 
+                                    editTask={props.editTask}/>
+                            )
+                        })
+                    }
+
+                    <Card sx={{ maxWidth: 245, margin: 1, maxHeight: 400 }}>
+                        <CardContent sx={{textAlign:"center"}}>
+                            <Typography variant="body2" color="text.secondary">
+                                <IconButton 
+                                    aria-label="edit"
+                                    onClick={() => props.toggleDrawer("TaskForm", "Add")}>
+                                    <AddSharp />
+                                </IconButton>
+                            </Typography>
+                            <Typography>Add Task</Typography>
+                        </CardContent>
+                    </Card>
+                </div>
+            </Box>
+
             
-            <div className="component-id">Event: {props.event.id}</div>
 
-            <div>{props.event.name}</div>
+            
 
-            <div>
-                {props.event.description}
-            </div>
 
-            <hr css={css`margin-top:25px;`}></hr>
+           
 
-            <h3>Tasks</h3>
+            
 
-            <button>Add Task</button>
-
-            <div className="task-card-container">
-                {
-                    props.tasks?.map(task => {
-                        return (
-                            <TaskCard 
-                                key={task.id} 
-                                users={task.users} 
-                                eventId={task.eventId} 
-                                id={task.id} 
-                                name={task.name} 
-                                description={task.description} 
-                                openModal={onDisplayTaskCard}
-                                />
-                        )
-                    })
-                }
-            </div>
-
-            {/* <ul>
-                <li>Target date of completion</li>
-                <li>People involved and their tasks</li>
-                <li>Conversations</li>
-                <li>Edit event</li>
-                <li>Add task</li>
-            </ul> */}
-
-            <Task 
-                visible={showTaskModal}
-                eventId={props.event.id}
-                taskId={selectedTaskId}
-                />
-
-            <AddTask addTask={props.addTask} eventId={props.event.id} />
         </div>
     );
 };

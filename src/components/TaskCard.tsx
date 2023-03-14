@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import React from 'react';
 import { useState } from 'react'
+
+import Paper from '@mui/material/Paper';
+import { Box } from '@mui/material';
+
 import { ITask, ITaskCardMethods } from '../interface/IEvent'
 import User from './User'
-import Task from './Task'
 import '../css/Task.css'
 
 function TaskCard(props: (ITask & ITaskCardMethods)){
@@ -17,11 +21,8 @@ function TaskCard(props: (ITask & ITaskCardMethods)){
     };
 
     return(
-        <div className="task"
-        css={css`
-            background-color: #FFF0F5;
-        `}
-        >
+        <React.Fragment>
+            <Box>
             <div
             css={css`
                 font-family:tahoma;
@@ -39,14 +40,13 @@ function TaskCard(props: (ITask & ITaskCardMethods)){
                     return <User key={user.id} id={user.id} email={user.email} />
                 })
             }
-
-            {/* <ul>
-                <li>Task status</li>
-                <li>Target completion date</li>
-            </ul> */}
+            </Box>
 
             
-        </div>
+
+            <Paper variant="outlined" />
+            
+        </React.Fragment>
     );
 }
 

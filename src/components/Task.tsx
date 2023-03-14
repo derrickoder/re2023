@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { ITaskComponentProps } from '../interface/IEvent'
-import Conversation from '../components/Conversation'
 import api from '../api/Event'
 import '../css/Task.css'
 
@@ -45,21 +44,8 @@ function Task(props: ITaskComponentProps){
             </div> */}
 
             <div className="task-id">Task: {props.taskId}</div>
-
-            
-
             <div>{task.name}</div>
             <div>{task.description}</div>
-
-            {/* <Conversation /> */}
-
-            {/* <ul>
-                <li>People involved</li>
-                <li>Conversations</li>
-                <li>Attachments</li>
-                <li>Description of task</li>
-                <li>Target date of completion</li>
-            </ul> */}
 
         </div>
     );

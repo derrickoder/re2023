@@ -16,7 +16,7 @@ const AddTask:FunctionComponent<IAddTaskComponentProps> = (props) => {
 
     return (
         <div>
-            <h3>Add Task</h3>
+            {/* <h3>Add Task</h3>
 
             <div>
                 Name:
@@ -35,7 +35,7 @@ const AddTask:FunctionComponent<IAddTaskComponentProps> = (props) => {
                     TaskDescription:stateDescription, 
                     TaskName:stateName
                     })}>Add</button>
-            </div>
+            </div> */}
         </div>
     );
 };

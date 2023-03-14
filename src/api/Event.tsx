@@ -5,10 +5,10 @@ const projectData: IProject = {
   'name': 'Project RE (beta)',
   'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   'events': [
-    {'id': 1, 'name': 'Interview Realtors', 'description': 'The quick brown fox.'},
-    {'id': 2, 'name': 'Sign RE Contract', 'description': 'The quick brown fox.'},
-    {'id': 3, 'name': 'Prepare House for Photo Shoot', 'description': 'The quick brown fox.'},
-    {'id': 4, 'name': 'List House in MLS', 'description': 'The quick brown fox.'}
+    {'id': 1, 'name': 'Interview Realtors', 'description': 'The quick brown fox jumped over.'},
+    {'id': 2, 'name': 'Sign RE Contract', 'description': 'The quick brown fox jumped over the lazy dogs.'},
+    {'id': 3, 'name': 'Prepare House for Photo Shoot', 'description': 'The quick brown fox. The quick brown fox jumped over.'},
+    {'id': 4, 'name': 'List House in MLS', 'description': 'The quick brown fox. The quick brown fox jumped over. The quick brown fox jumped over.'}
   ]
 };
 
@@ -17,8 +17,8 @@ const allData: IEventDetails[] = [
     name: 'Event 1',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     tasks: [
-      {users: [{id:1, email:"test@test.com"}], eventId: 1, id:1, name:'task # 1', description: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
-      {users: [{id:1, email:"test@test.com"}], eventId: 1, id:3, name:'task # 3', description: 'sed do eiusmod sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
+      {users: [{id:1, email:"test@test.com"}], eventId: 1, id:1, name:'task # 1', description: 'Incididunt ut labore et dolore magna aliqua.  Incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
+      {users: [{id:1, email:"test@test.com"}], eventId: 1, id:3, name:'task # 3', description: 'Sed do eiusmod sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
     ]},
   { id: 2,
     name: 'Event 2',
@@ -30,8 +30,9 @@ const allData: IEventDetails[] = [
     name: 'Event 3',
     description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
     tasks: [
-      {users: [{id:1, email:"test@test.com"}], eventId: 3, id:1, name:'task # 1', description: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
-      //{id:3, name:'task 3', description: 'sed do eiusmod sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'},
+      {users: [{id:1, email:"test@test.com"}], eventId: 3, id:1, name:'task # 1', description: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua.'},
+      {users: [{id:2, email:"test@test.com"}], eventId: 3, id:1, name:'task # 1', description: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua.'},
+      {users: [{id:3, email:"test@test.com"}], eventId: 3, id:1, name:'task # 1', description: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua. Incididunt ut labore et dolore magna aliqua.'},
     ]},
   { id: 4,
     name: 'Event 4',

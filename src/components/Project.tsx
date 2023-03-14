@@ -1,3 +1,4 @@
+import React from 'react';
 import { FunctionComponent, useState, useEffect } from 'react'
 import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput, IEventFormData } from '../interface/IEvent'
 import Timeline from '../components/Timeline'
@@ -10,9 +11,13 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     // State
     const [stateShowEvent, setStateShowEvent] = useState(false);
     const [stateEventData, setStateEventData] = useState({} as IEventDetails);
+    const [stateSelectedEventId, setStateSelectedEventId] = useState(0);
     const [stateEventTaskData, setStateEventTaskData] = useState([] as ITask[]);
+    const [stateSelectedTaskId, setStateSelectedTaskId] = useState(0);
     const [stateProjectEventData, setStateProjectEventData] = useState([] as IEvent[]);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [componentDrawer, setComponentDrawer] = useState("");
+    const [componentDrawerAction, setComponentDrawerAction] = useState("new");
 
     useEffect(()=>{
         const projectEventsData = api.EventsForProject(props.projectId);
@@ -32,45 +37,88 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
         setStateShowEvent(false);
     };
 
-    const onOpenForm = () => {
-        // open a form
-        onToggleDrawer();
-    };
-
     const onAddEvent = (formData:IEventFormData) => {
-        // add to state
-        const newEvent = { 
-            id: 5,
-            name: formData.name,
-            description: formData.description,
-            tasks: []};
-        setStateProjectEventData([...stateProjectEventData, newEvent]);
-        onToggleDrawer();
+        if(formData.eventId === 0){
+            const newEvent = { 
+                id: 5,
+                name: formData.name,
+                description: formData.description,
+                tasks: []};
+            setStateProjectEventData([...stateProjectEventData, newEvent]);
+        }
+        else{
+            const updatedEvents = stateProjectEventData.map(event => {
+                if(event.id === formData.eventId){
+                    return {
+                        ...event,
+                        name: formData.name,
+                        description: formData.description
+                    }
+                }
+                else{
+                    return event;
+                }
+            });
+            setStateProjectEventData(updatedEvents);
+        }
+
+        
+        // onToggleDrawer("event", "add");
     };
 
     const onAddTask = (input:IAddTaskMethodInput) => {
-        const nextTaskId = stateEventTaskData.length + 1;
-        const newTask = {
-            users: [{id:1, email:"test@test.com"},{id:2, email:"test2@test.com"}], 
-            eventId: input.EventId, 
-            id:nextTaskId, 
-            name: input.TaskName,
-            description: input.TaskDescription
-        };
+        if(input.TaskId === 0){
+            const nextTaskId = stateEventTaskData.length + 1;
+            const newTask = {
+                users: [{id:1, email:"test@test.com"},{id:2, email:"test2@test.com"}], 
+                eventId: input.EventId, 
+                id:nextTaskId, 
+                name: input.TaskName,
+                description: input.TaskDescription
+            };
+            setStateEventTaskData([...stateEventTaskData, newTask]);
+        }
+        else{
+            const updatedTasks = stateEventTaskData.map(task => {
+                if(task.id === input.TaskId){
+                    return {
+                        ...task,
+                        name: input.TaskName,
+                        description: input.TaskDescription
+                    }
+                }
+                else{
+                    return task;
+                }
+            });
+            setStateEventTaskData(updatedTasks);
+        }
+        
             
-        setStateEventTaskData([...stateEventTaskData, newTask]);
     };
 
-    const onToggleDrawer = () => {
+    const onEditTask = (taskId:number) => {
+        setStateSelectedTaskId(taskId)
+        setComponentDrawerAction("edit");
+        setComponentDrawer("TaskForm");
         setOpenDrawer(!openDrawer);
     };
 
-    const onRefreshData = (isUpdated:boolean) => {
-        alert('refresh the data');
-    }
-    
+    const onEditEvent = (eventId:number) => {
+        setStateSelectedEventId(eventId);
+        setComponentDrawerAction("edit");
+        setComponentDrawer("EventForm");
+        setOpenDrawer(!openDrawer);
+    };
+
+    const onToggleDrawer = (component:string, componentAction:string) => {
+        setComponentDrawer(component);
+        setComponentDrawerAction(componentAction);
+        setOpenDrawer(!openDrawer);
+    };
+
     return(
-        <div>
+        <React.Fragment>
 
             <div className="component-id">
                 Project: {props.projectId} &nbsp;&nbsp;
@@ -84,7 +132,7 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 {props.projectDescription}
             </div>
 
-            <button onClick={onOpenForm}>Add Event</button>
+            <button onClick={() => onToggleDrawer("EventForm", "Add")}>Add Event</button>
 
             <Timeline 
                 projectId={props.projectId}
@@ -98,8 +146,11 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                         visible={stateShowEvent}
                         event={stateEventData}
                         tasks={stateEventTaskData}
+                        toggleDrawer={onToggleDrawer}
                         hideComponent={onHideEvent}
                         addTask={onAddTask}
+                        editTask={onEditTask}
+                        editEvent={onEditEvent}
                     /> 
                 )
             }
@@ -107,15 +158,17 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
             <GenericDrawer 
                 open={openDrawer}
                 componentHeading="New Event"
-                component="EventForm"
+                component={componentDrawer}
+                componentAction={componentDrawerAction}
                 toggleDrawer={onToggleDrawer} 
-                refreshData={onRefreshData}
                 addEvent={onAddEvent}
+                addTask={onAddTask}
+                eventId={stateEventData.id}
+                taskId={stateSelectedTaskId}
                 />
 
-        </div>
+        </React.Fragment>
     );
-
 }
 
 export default Project;

@@ -10,6 +10,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { IGenericDrawer } from '../interface/IEvent';
 import ProjectForm from '../components/ProjectForm'
 import EventForm from '../components/EventForm'
+import TaskForm from '../components/TaskForm'
 
 const GenericDrawer: FunctionComponent<IGenericDrawer> = (props) => {
 
@@ -36,15 +37,23 @@ const GenericDrawer: FunctionComponent<IGenericDrawer> = (props) => {
                         <Grid xs={3}>
                             <Stack spacing={2} direction="row">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <Button variant="text" onClick={props.toggleDrawer}>Close</Button>
+                                <Button variant="text" onClick={() => props.toggleDrawer("","")}>Close</Button>
                             </Stack>   
                         </Grid>
                     </Grid>
                 </Box>
 
                 <Box sx={{width:"400px"}}>
-                    {(props.component === "ProjectForm") && (<ProjectForm />)}
-                    {(props.component === "EventForm") && (<EventForm addEvent={props.addEvent} />)}                   
+                    {(props.component === "ProjectForm") && (<ProjectForm addProject={props.addProject!} />)}
+                    {(props.component === "EventForm") && (<EventForm 
+                        addEvent={props.addEvent!}
+                        eventId={props.eventId!}
+                        componentAction={props.componentAction!} />)}                   
+                    {(props.component === "TaskForm") && (<TaskForm 
+                        eventId={props.eventId!} 
+                        taskId={props.taskId!}
+                        addTask={props.addTask!}
+                        componentAction={props.componentAction!} />)}                   
                 </Box>
             </Drawer>
         </React.Fragment>
