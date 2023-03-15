@@ -16,6 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import EditSharp from '@mui/icons-material/EditSharp';
+import { Box } from '@mui/material';
 
 import { FunctionComponent, useState } from 'react'
 import { ITaskCardComponentProps } from '../interface/IEvent';
@@ -43,21 +44,43 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
     };
 
     return (
-    <Card sx={{ maxWidth: 245, margin: 1, maxHeight: 400 }}>
+    <Card 
+      sx={{ 
+        maxWidth: 225, 
+        margin: 1, 
+        justifyContent: "space-between",
+        display: "flex",
+        flexDirection: "column",
+        }}>
         <CardHeader
-            avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="">
-                    dg
-                </Avatar>
+          sx={{backgroundColor:"lightGreen"}}
+
+            // avatar={
+            //     <Avatar sx={{ bgcolor: red[500] }} aria-label="">
+            //         dg
+            //     </Avatar>
+            // }
+            // action={
+            //   <IconButton 
+            //       aria-label="edit"
+            //       onClick={() => props.editTask(props.id)}>
+            //       <EditSharp />
+            //   </IconButton>
+            // }
+            title={
+              <Box>
+                <Typography variant='subtitle2' color="text.secondary">
+                Task ID: {props.id}
+                <IconButton 
+                    aria-label="edit"
+                    onClick={() => props.editTask(props.id)}>
+                    <EditSharp />
+                </IconButton>
+              </Typography>
+              {props.name}
+              </Box>
             }
-            action={
-              <IconButton 
-                  aria-label="edit"
-                  onClick={() => props.editTask(props.id)}>
-                  <EditSharp />
-              </IconButton>
-            }
-            title={props.name}
+
             subheader="September 14, 2016"
         />
         {/* <CardMedia
@@ -67,11 +90,11 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
         alt="Paella dish"
         /> */}
         <CardContent>
-        <Typography variant="body2" color="text.secondary">
-            {props.description}
-        </Typography>
+          <Typography variant="body2" color="text.secondary">
+              {props.description}
+          </Typography>
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions disableSpacing sx={{mt: "auto"}}>
 
             
             
@@ -89,6 +112,16 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
                 >
                 <ExpandMoreIcon />
             </ExpandMore> */}
+
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="">
+                  dg
+              </Avatar>
+
+              {/* <IconButton 
+                  aria-label="edit"
+                  onClick={() => props.editTask(props.id)}>
+                  <EditSharp />
+              </IconButton> */}
         </CardActions> 
       
       <Collapse in={expanded} timeout="auto" unmountOnExit>

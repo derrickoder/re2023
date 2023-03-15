@@ -1,6 +1,17 @@
 import React from 'react';
 import { FunctionComponent, useState, useEffect } from 'react'
+import { Box, CardHeader } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import EditSharp from '@mui/icons-material/EditSharp';
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import { red, blue, yellow } from '@mui/material/colors';
+
 import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput, IEventFormData } from '../interface/IEvent'
+
 import Timeline from '../components/Timeline'
 import Event from '../components/Event'
 import api from '../api/Event';
@@ -120,40 +131,74 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     return(
         <React.Fragment>
 
-            <div className="component-id">
-                Project: {props.projectId} &nbsp;&nbsp;
-            </div>
+            <Box sx={{backgroundColor:"white",padding:2}}>
+                <Box sx={{backgroundColor:"white",padding:1,margin:1}}>
 
-            <div>
-                {props.projectName}
-            </div>
+                    <Paper 
+                        elevation={1}
+                        sx={{backgroundColor:"white",padding:2}}>
+                        <Typography variant='subtitle2' color="text.secondary">
+                            Project ID: {props.projectId}
+                            <IconButton 
+                                aria-label="edit"
+                                //onClick={() => props.editEvent(props.event.id)}
+                                >
+                                <EditSharp />
+                            </IconButton>
+                        </Typography>
+                        <Typography variant="h4">{props.projectName}</Typography>
+                        <Typography>{props.projectDescription}</Typography>
 
-            <div>
-                {props.projectDescription}
-            </div>
+                        <Box sx={{display:"flex",margin:1}}>
+                            <Avatar sx={{ bgcolor: red[500], marginRight:.5 }} aria-label="">
+                                dg
+                            </Avatar>
+                            <Avatar sx={{ bgcolor: blue[500], marginRight:.5 }} aria-label="">
+                                yg
+                            </Avatar>
+                            <Avatar sx={{ bgcolor: yellow[700], marginRight:.5 }} aria-label="">
+                                bg
+                            </Avatar>
+                        </Box>
+                    </Paper>
 
-            <button onClick={() => onToggleDrawer("EventForm", "Add")}>Add Event</button>
+                    
+                    
+                </Box>
 
-            <Timeline 
-                projectId={props.projectId}
-                timelineEventClick={onTimelineEventClick} 
-                events={stateProjectEventData}
-            />
 
-            {
-                stateShowEvent && (
-                    <Event
-                        visible={stateShowEvent}
-                        event={stateEventData}
-                        tasks={stateEventTaskData}
+                <Box sx={{backgroundColor:"#f9f9f9",padding:2,margin:1}}>
+                    <Timeline 
+                        projectId={props.projectId}
+                        timelineEventClick={onTimelineEventClick} 
+                        events={stateProjectEventData}
                         toggleDrawer={onToggleDrawer}
-                        hideComponent={onHideEvent}
-                        addTask={onAddTask}
-                        editTask={onEditTask}
-                        editEvent={onEditEvent}
-                    /> 
-                )
-            }
+                    />
+                    
+                    {
+                    stateShowEvent && (
+                        <Event
+                            visible={stateShowEvent}
+                            event={stateEventData}
+                            tasks={stateEventTaskData}
+                            toggleDrawer={onToggleDrawer}
+                            hideComponent={onHideEvent}
+                            addTask={onAddTask}
+                            editTask={onEditTask}
+                            editEvent={onEditEvent}/> 
+                    )}
+                </Box>
+
+                
+            </Box>
+
+            
+
+            {/* <button onClick={() => onToggleDrawer("EventForm", "Add")}>Add Event</button> */}
+
+            
+
+            
                     
             <GenericDrawer 
                 open={openDrawer}

@@ -95,6 +95,7 @@ interface ITimelineComponentProps{
     timelineEventClick: (id:number) => void;
     projectId:number;
     events:IEvent[];
+    toggleDrawer: (component:string, componentAction:string) => void;
 }
 
 interface TimelineEventComponentProps{

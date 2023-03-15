@@ -1,7 +1,7 @@
 import React from 'react';
 import { FunctionComponent, useState } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -18,43 +18,46 @@ const GenericDrawer: FunctionComponent<IGenericDrawer> = (props) => {
 
         <React.Fragment>
         
-            <Drawer 
+            <Drawer
+                sx={{ }} 
                 open={props.open} 
                 anchor="right"
                 >
 
-                <Box sx={{ 
-                    padding:"19px",
-                    backgroundColor:"#d9d9d9",
-                    fontSize:"19px",
-                    fontWeight:"bold",
-                    height:"69px",
-                    }}>
-                    <Grid container spacing={2}>
-                        <Grid xs={9}>
-                            {props.componentHeading}
+                <Box sx={{width:700}}>
+                    <Box sx={{ 
+                        padding:"35px",
+                        backgroundColor:"#e9e9e9",
+                        
+                        }}>
+                        <Grid container spacing={2}>
+                            <Grid xs={9}>
+                                <Typography variant="h5">
+                                    {props.componentHeading}
+                                </Typography>
+                            </Grid>
+                            <Grid xs={3}>
+                                <Stack spacing={2} direction="row" sx={{float:"right"}}>
+                                    <Button variant="text" onClick={() => props.toggleDrawer("","")}>Close</Button>
+                                </Stack>   
+                            </Grid>
                         </Grid>
-                        <Grid xs={3}>
-                            <Stack spacing={2} direction="row">
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <Button variant="text" onClick={() => props.toggleDrawer("","")}>Close</Button>
-                            </Stack>   
-                        </Grid>
-                    </Grid>
-                </Box>
+                    </Box>
 
-                <Box sx={{width:"400px"}}>
-                    {(props.component === "ProjectForm") && (<ProjectForm addProject={props.addProject!} />)}
-                    {(props.component === "EventForm") && (<EventForm 
-                        addEvent={props.addEvent!}
-                        eventId={props.eventId!}
-                        componentAction={props.componentAction!} />)}                   
-                    {(props.component === "TaskForm") && (<TaskForm 
-                        eventId={props.eventId!} 
-                        taskId={props.taskId!}
-                        addTask={props.addTask!}
-                        componentAction={props.componentAction!} />)}                   
+                    <Box>
+                        {(props.component === "ProjectForm") && (<ProjectForm addProject={props.addProject!} />)}
+                        {(props.component === "EventForm") && (<EventForm 
+                            addEvent={props.addEvent!}
+                            eventId={props.eventId!}
+                            componentAction={props.componentAction!} />)}                   
+                        {(props.component === "TaskForm") && (<TaskForm 
+                            eventId={props.eventId!} 
+                            taskId={props.taskId!}
+                            addTask={props.addTask!}
+                            componentAction={props.componentAction!} />)}                   
+                    </Box>
                 </Box>
+                
             </Drawer>
         </React.Fragment>
     );

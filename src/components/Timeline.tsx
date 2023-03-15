@@ -1,3 +1,4 @@
+import React from 'react';
 import { FunctionComponent, useState, useEffect } from 'react'
 import { IEvent, ITimelineComponentProps } from '../interface/IEvent'
 import TimelineEvent from './TimelineEvent'
@@ -32,30 +33,45 @@ const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
     // }, [])
 
     return (
-        <div className="event-card-container">
-            {
-                props.events.map(event => {
-                    return(<TimelineEvent 
-                        key={event.id} 
-                        event={event} 
-                        timelineEventClick={props.timelineEventClick} />)
-                })
-            }
+        <React.Fragment>
 
-<Card sx={{ maxWidth: 245, margin: 1, maxHeight: 400 }}>
-                        <CardContent sx={{textAlign:"center"}}>
-                            <Typography variant="body2" color="text.secondary">
-                                <IconButton 
-                                    aria-label="edit"
-                                     onClick={() => props.toggleDrawer("TaskForm", "Add")}
-                                    >
-                                    <AddSharp />
-                                </IconButton>
-                            </Typography>
-                            <Typography>Add Event</Typography>
-                        </CardContent>
-                    </Card>
-        </div>
+            <Typography variant="h5">Events</Typography>
+
+            <Box className="event-card-container">
+
+
+                {
+                    props.events.map(event => {
+                        return(<TimelineEvent 
+                            key={event.id} 
+                            event={event} 
+                            timelineEventClick={props.timelineEventClick} />)
+                    })
+                }
+
+                <Card 
+                    sx={{ 
+                        margin: 1, 
+                        justifyContent: "center",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                    onClick={() => props.toggleDrawer("EventForm", "Add")}
+                >
+                    <CardContent sx={{textAlign:"center"}}>
+                        <Typography variant="body2" color="text.secondary">
+                            <IconButton 
+                                aria-label="add" onClick={() => props.toggleDrawer("EventForm", "Add")}>
+                                <AddSharp />
+                            </IconButton>
+                        </Typography>
+                        
+                    </CardContent>
+                </Card>
+            </Box>
+
+        </React.Fragment>
+
     );
 };
 
