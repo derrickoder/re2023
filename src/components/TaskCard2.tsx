@@ -17,6 +17,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import EditSharp from '@mui/icons-material/EditSharp';
 import { Box } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import { FunctionComponent, useState } from 'react'
 import { ITaskCardComponentProps } from '../interface/IEvent';
@@ -70,18 +72,19 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
             title={
               <Box>
                 <Typography variant='subtitle2' color="text.secondary">
-                Task ID: {props.id}
-                <IconButton 
-                    aria-label="edit"
-                    onClick={() => props.editTask(props.id)}>
-                    <EditSharp />
-                </IconButton>
-              </Typography>
-              {props.name}
+                  Task ID: {props.id}
+                  {/* <IconButton 
+                      aria-label="edit"
+                      onClick={() => props.editTask(props.id)}>
+                      <EditSharp />
+                  </IconButton> */}
+                </Typography>
+
+                
               </Box>
             }
 
-            subheader="September 14, 2016"
+            subheader=""
         />
         {/* <CardMedia
         component="img"
@@ -89,10 +92,27 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
         image="/static/images/cards/paella.jpg"
         alt="Paella dish"
         /> */}
+
         <CardContent>
+        
+          {/* <Stack direction="row" spacing={1} sx={{margin:0}}>
+              <Chip label={"Status:" + props.statusId} size="small" sx={{backgroundColor:'darkseagreen'}}/>
+          </Stack> */}
+
+          <Typography variant="body2" sx={{marginBottom:1}}>
+              Status: {props.statusId}
+          </Typography>
+
+          <Typography variant="h6"
+              sx={{textDecoration:"underline",cursor:"pointer"}}
+              onClick={() => props.showTask!(false, props.id)}>
+              {props.name}
+          </Typography>
+
           <Typography variant="body2" color="text.secondary">
               {props.description}
           </Typography>
+
         </CardContent>
         <CardActions disableSpacing sx={{mt: "auto"}}>
 
@@ -112,6 +132,8 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
                 >
                 <ExpandMoreIcon />
             </ExpandMore> */}
+
+              
 
               <Avatar sx={{ bgcolor: red[500] }} aria-label="">
                   dg

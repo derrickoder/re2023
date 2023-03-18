@@ -21,6 +21,9 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { red } from '@mui/material/colors';
 import EditSharp from '@mui/icons-material/EditSharp';
 import AddSharp from '@mui/icons-material/AddSharp';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
 
 const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
 
@@ -35,7 +38,15 @@ const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
     return (
         <React.Fragment>
 
-            <Typography variant="h5">Events</Typography>
+            <Stack spacing={1} direction="row">
+                            <Typography variant="h5" sx={{marginRight:1}}>
+                                Events
+                            </Typography>
+                            {/* <Button variant="outlined" onClick={() => props.toggleDrawer("EventForm", "Add")}>Add Event</Button> */}
+                            <Button variant="outlined" onClick={() => props.timelineEventClick(0)}>Add Event</Button>
+                        </Stack>
+
+            <Divider sx={{marginTop:2,marginBottom:1}} />
 
             <Box className="event-card-container">
 
@@ -49,7 +60,7 @@ const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
                     })
                 }
 
-                <Card 
+                {/* <Card 
                     sx={{ 
                         margin: 1, 
                         justifyContent: "center",
@@ -67,7 +78,7 @@ const Timeline: FunctionComponent<ITimelineComponentProps> = (props) => {
                         </Typography>
                         
                     </CardContent>
-                </Card>
+                </Card> */}
             </Box>
 
         </React.Fragment>

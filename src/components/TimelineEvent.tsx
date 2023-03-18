@@ -37,16 +37,6 @@ const TimelineEvent : FunctionComponent<TimelineEventComponentProps> = (props) =
     return (
         <React.Fragment>
 
-        {/* <Box className="eventCard" 
-            onClick={() => props.timelineEventClick(props.event.id)}
-            sx={{
-                }}
-            >
-            <Item elevation={2}>{props.event.name}</Item>    
-            <div css={css`font-size:12px;font-weight:bold;padding:10px;`}>{props.event.name}</div>
-        </Box> 
-        */}
-
         <Card 
             sx={{ 
                 maxWidth: 225, 
@@ -57,8 +47,7 @@ const TimelineEvent : FunctionComponent<TimelineEventComponentProps> = (props) =
                 }}>
 
         <CardHeader
-            onClick={() => props.timelineEventClick(props.event.id)}
-            sx={{backgroundColor:"lightBlue",cursor:"pointer"}}
+            sx={{backgroundColor:"lightBlue"}}
             
             // avatar={
             //     <Avatar sx={{ bgcolor: red[500] }} aria-label="">
@@ -74,11 +63,20 @@ const TimelineEvent : FunctionComponent<TimelineEventComponentProps> = (props) =
             // }
             
             //title={props.event.name}
-            title={props.event.name}
+            title={
+                <Typography variant='subtitle2' color="text.secondary">
+                    Event ID: {props.event.id}
+                </Typography>
+            }
 
-            subheader={"Mar 3, 2013"}
+            subheader={""}
         />
             <CardContent>
+                <Typography variant="h6"
+                    sx={{textDecoration:"underline",cursor:"pointer"}}
+                    onClick={() => props.timelineEventClick(props.event.id)}>
+                    {props.event.name}
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {props.event.description}
                 </Typography>

@@ -47,6 +47,7 @@ interface ITask{
     name: string;
     description: string;
     users: IUser[];
+    statusId: number;
 }
 
 interface ITaskComponentProps{
@@ -89,6 +90,7 @@ interface IEventComponentProps{
     toggleDrawer: (component:string, componentAction:string) => void;
     editTask: (taskId:number) => void;
     editEvent: (eventId:number) => void;
+    addEvent?: (formData:IEventFormData) => void;
 }
 
 interface ITimelineComponentProps{
@@ -101,6 +103,7 @@ interface ITimelineComponentProps{
 interface TimelineEventComponentProps{
     event:IEvent;
     timelineEventClick: (id:number) => void;
+    action?:string;
 }
 
 interface IAddTaskComponentProps{
@@ -108,6 +111,7 @@ interface IAddTaskComponentProps{
     taskId:number;
     addTask: (input:IAddTaskMethodInput) => void;
     componentAction:string;
+    hideTask?: () => void;
 }
 
 interface IAddTaskMethodInput {
@@ -115,6 +119,7 @@ interface IAddTaskMethodInput {
     TaskId:number;
     TaskName:string;
     TaskDescription:string;
+    StatusId:number;
 }
 
 interface IGenericDrawer{
@@ -128,6 +133,7 @@ interface IGenericDrawer{
     addProject?: (formData:IProjectFormData) => void;
     addEvent?: (formData:IEventFormData) => void;
     addTask?: (formData:IAddTaskMethodInput) => void;
+    hideTask?: () => void;
 }
 
 interface IEventFormComponent{
@@ -155,8 +161,14 @@ interface ITaskCardComponentProps{
     id:number;
     name:string;
     description:string;
+    statusId:number;
     editTask:(taskId:number) => void;
+    showTask?:(add:boolean, taskId:number) => void;
 }
+
+interface IEventV2ComponentProps{
+
+};
 
 
 export type {
@@ -185,4 +197,5 @@ export type {
     IProjectFormComponent,
     IProjectFormData,
     ITaskCardComponentProps,
+    IEventV2ComponentProps,
 };

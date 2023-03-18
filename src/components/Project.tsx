@@ -1,19 +1,23 @@
 import React from 'react';
 import { FunctionComponent, useState, useEffect } from 'react'
 import { Box, CardHeader } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import EditSharp from '@mui/icons-material/EditSharp';
-import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import { red, blue, yellow } from '@mui/material/colors';
+import Grid from '@mui/material/Unstable_Grid2';
+import Paper from '@mui/material/Paper';
+
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
 
 import { IProjectComponentProps, IEvent, IEventDetails, ITask, IAddTaskMethodInput, IEventFormData } from '../interface/IEvent'
-
 import Timeline from '../components/Timeline'
 import Event from '../components/Event'
+import EventV2 from '../components/EventV2'
 import api from '../api/Event';
 import GenericDrawer from '../components/GenericDrawer';
 
@@ -72,9 +76,6 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
             });
             setStateProjectEventData(updatedEvents);
         }
-
-        
-        // onToggleDrawer("event", "add");
     };
 
     const onAddTask = (input:IAddTaskMethodInput) => {
@@ -85,17 +86,21 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
                 eventId: input.EventId, 
                 id:nextTaskId, 
                 name: input.TaskName,
-                description: input.TaskDescription
+                description: input.TaskDescription,
+                statusId: input.StatusId,
             };
             setStateEventTaskData([...stateEventTaskData, newTask]);
         }
         else{
             const updatedTasks = stateEventTaskData.map(task => {
                 if(task.id === input.TaskId){
+                    alert(input.StatusId);
+                    
                     return {
                         ...task,
                         name: input.TaskName,
-                        description: input.TaskDescription
+                        description: input.TaskDescription,
+                        statusId: input.StatusId,
                     }
                 }
                 else{
@@ -104,8 +109,6 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
             });
             setStateEventTaskData(updatedTasks);
         }
-        
-            
     };
 
     const onEditTask = (taskId:number) => {
@@ -131,74 +134,89 @@ const Project: FunctionComponent<IProjectComponentProps> = (props) => {
     return(
         <React.Fragment>
 
-            <Box sx={{backgroundColor:"white",padding:2}}>
-                <Box sx={{backgroundColor:"white",padding:1,margin:1}}>
+    
 
-                    <Paper 
-                        elevation={1}
-                        sx={{backgroundColor:"white",padding:2}}>
-                        <Typography variant='subtitle2' color="text.secondary">
-                            Project ID: {props.projectId}
-                            <IconButton 
-                                aria-label="edit"
-                                //onClick={() => props.editEvent(props.event.id)}
-                                >
-                                <EditSharp />
-                            </IconButton>
-                        </Typography>
-                        <Typography variant="h4">{props.projectName}</Typography>
-                        <Typography>{props.projectDescription}</Typography>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={1}>
+                    <Grid xs={4}>
+                        <Card 
+                            sx={{ 
+                                maxWidth: "100%", 
+                                margin: 0, 
+                                justifyContent: "space-between",
+                                display: "flex",
+                                flexDirection: "column",
+                                }}>
+                            <CardHeader
+                                sx={{backgroundColor:"lightYellow"}}
+                                title={
+                                    <Typography variant='subtitle2' color="text.secondary">
+                                        Project ID: {props.projectId}
+                                        <IconButton 
+                                            aria-label="edit"
+                                            //onClick={() => props.editEvent(props.event.id)}
+                                            >
+                                            <EditSharp />
+                                        </IconButton>
+                                        <Typography variant="h4" sx={{color:"black"}}>{props.projectName}</Typography>
+                                    </Typography>
+                                }
+                            />
 
-                        <Box sx={{display:"flex",margin:1}}>
-                            <Avatar sx={{ bgcolor: red[500], marginRight:.5 }} aria-label="">
-                                dg
-                            </Avatar>
-                            <Avatar sx={{ bgcolor: blue[500], marginRight:.5 }} aria-label="">
-                                yg
-                            </Avatar>
-                            <Avatar sx={{ bgcolor: yellow[700], marginRight:.5 }} aria-label="">
-                                bg
-                            </Avatar>
+                            <CardMedia
+                                component="img"
+                                height="194"
+                                image={require('../images/house.PNG')}
+                                alt="Paella dish"
+                                />
+
+                            <CardContent>
+                                <Typography>{props.projectDescription}</Typography>
+                            </CardContent>
+
+                            <CardActions disableSpacing sx={{mt: "auto"}}>
+                                <Box sx={{display:"flex",margin:1}}>
+                                    <Avatar sx={{ bgcolor: red[500], marginRight:.5 }} aria-label="">
+                                        dg
+                                    </Avatar>
+                                    <Avatar sx={{ bgcolor: blue[500], marginRight:.5 }} aria-label="">
+                                        yg
+                                    </Avatar>
+                                    <Avatar sx={{ bgcolor: yellow[700], marginRight:.5 }} aria-label="">
+                                        bg
+                                    </Avatar>
+                                </Box>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid xs={8}>
+                        <Box sx={{backgroundColor:"#f9f9f9",padding:2,margin:0}}>
+                                {!stateShowEvent && (
+                                    <Timeline 
+                                        projectId={props.projectId}
+                                        timelineEventClick={onTimelineEventClick} 
+                                        events={stateProjectEventData}
+                                        toggleDrawer={onToggleDrawer}
+                                        />
+                                )}
+                                
+                                {stateShowEvent && (
+                                    <EventV2
+                                        visible={stateShowEvent}
+                                        event={stateEventData}
+                                        tasks={stateEventTaskData}
+                                        toggleDrawer={onToggleDrawer}
+                                        hideComponent={onHideEvent}
+                                        addTask={onAddTask}
+                                        editTask={onEditTask}
+                                        editEvent={onEditEvent}
+                                        addEvent={onAddEvent}
+                                        /> 
+                                )}
                         </Box>
-                    </Paper>
-
-                    
-                    
-                </Box>
-
-
-                <Box sx={{backgroundColor:"#f9f9f9",padding:2,margin:1}}>
-                    <Timeline 
-                        projectId={props.projectId}
-                        timelineEventClick={onTimelineEventClick} 
-                        events={stateProjectEventData}
-                        toggleDrawer={onToggleDrawer}
-                    />
-                    
-                    {
-                    stateShowEvent && (
-                        <Event
-                            visible={stateShowEvent}
-                            event={stateEventData}
-                            tasks={stateEventTaskData}
-                            toggleDrawer={onToggleDrawer}
-                            hideComponent={onHideEvent}
-                            addTask={onAddTask}
-                            editTask={onEditTask}
-                            editEvent={onEditEvent}/> 
-                    )}
-                </Box>
-
-                
+                    </Grid>
+                </Grid>
             </Box>
-
-            
-
-            {/* <button onClick={() => onToggleDrawer("EventForm", "Add")}>Add Event</button> */}
-
-            
-
-            
                     
             <GenericDrawer 
                 open={openDrawer}

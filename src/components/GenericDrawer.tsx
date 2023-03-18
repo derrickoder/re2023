@@ -54,7 +54,8 @@ const GenericDrawer: FunctionComponent<IGenericDrawer> = (props) => {
                             eventId={props.eventId!} 
                             taskId={props.taskId!}
                             addTask={props.addTask!}
-                            componentAction={props.componentAction!} />)}                   
+                            componentAction={props.componentAction!}
+                            />)}                   
                     </Box>
                 </Box>
                 
