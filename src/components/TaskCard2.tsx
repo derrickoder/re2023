@@ -14,6 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import EditSharp from '@mui/icons-material/EditSharp';
 import { Box } from '@mui/material';
@@ -45,6 +46,25 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
         setExpanded(!expanded);
     };
 
+    const displayStatusText = (statusId:number) : string =>  {
+      let statusText = "unknown";
+      switch(statusId){
+        case 0:
+          statusText = "Not Active";
+          break;
+        case 1:
+          statusText = "New";
+          break;
+        case 2:
+          statusText = "Active";
+          break;
+        case 3:
+          statusText = "Done";
+          break;
+      }
+      return statusText;
+    };
+
     return (
     <Card 
       sx={{ 
@@ -71,14 +91,27 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
             // }
             title={
               <Box>
-                <Typography variant='subtitle2' color="text.secondary">
-                  Task ID: {props.id}
-                  {/* <IconButton 
-                      aria-label="edit"
-                      onClick={() => props.editTask(props.id)}>
-                      <EditSharp />
-                  </IconButton> */}
-                </Typography>
+                <Stack spacing={1} direction="row">
+                  <Typography variant='subtitle2' color="text.secondary">
+                    Task ID: {props.id}
+                    {/* <IconButton 
+                        aria-label="edit"
+                        onClick={() => props.editTask(props.id)}>
+                        <EditSharp />
+                    </IconButton> */}
+                  </Typography>
+
+                  {/* {
+                    (props.statusId === 3) && (
+                    <Stack spacing={0} direction="row">
+                      
+                      <CheckBoxIcon sx={{ color: "black" }} />
+                        <Typography>Done</Typography>
+                      </Stack>
+                    )
+                  } */}
+                </Stack>
+                
 
                 
               </Box>
@@ -100,7 +133,7 @@ const TaskCard2 : FunctionComponent<ITaskCardComponentProps> = (props) => {
           </Stack> */}
 
           <Typography variant="body2" sx={{marginBottom:1}}>
-              Status: {props.statusId}
+              Status: {displayStatusText(props.statusId)}
           </Typography>
 
           <Typography variant="h6"
