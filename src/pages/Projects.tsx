@@ -19,37 +19,42 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import { red, blue, yellow } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
 
 import axios from 'axios';
+
+import getStatusDescription from '../common/wfStatus';
 
 const Projects = () => {
 
     interface IProjects{
-        id:number;
-        name:string;
-        description:string;
-        image:string;
+        Id:number;
+        Name:string;
+        Description:string;
+        Image:string;
+        StatusId:number;
+        CreatedDate:string;
     };
 
     const [projectsData, setProjectsData] = useState([] as IProjects[]);
     const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(()=>{
-        const projects: IProjects[] = [
-            {
-                id:1, 
-                name:'1315 Blair Lane, Hoffman Estates, IL 60169', 
-                description:'We are selling our beautiful home.',
-                image:'house.PNG'
-            },
-            {
-                id:2, 
-                name:'900 N. Kingsbury St. # 821, Chicago, IL 60610', 
-                description:'We are renting our beautiful condo.',
-                image:'condo.PNG'
-            },
-        ];
-        setProjectsData(projects);
+        // const projects: IProjects[] = [
+        //     {
+        //         id:1, 
+        //         name:'1315 Blair Lane, Hoffman Estates, IL 60169', 
+        //         description:'We are selling our beautiful home.',
+        //         image:'house.PNG'
+        //     },
+        //     {
+        //         id:2, 
+        //         name:'900 N. Kingsbury St. # 821, Chicago, IL 60610', 
+        //         description:'We are renting our beautiful condo.',
+        //         image:'condo.PNG'
+        //     },
+        // ];
+        // setProjectsData(projects);
         getProjects();
 
     }, [])
@@ -59,19 +64,18 @@ const Projects = () => {
     };
 
     const onAddProject = (formData:IProjectFormData) => {
-        const newProject: IProjects = { id:2, name: formData.name, description: 
-            formData.description, image:"house.PNG"};
-        setProjectsData([...projectsData, newProject]);
+        // const newProject: IProjects = { id:2, name: formData.name, description: 
+        //     formData.description, image:"house.PNG"};
+        // setProjectsData([...projectsData, newProject]);
     };
 
     const getProjects = () => {
-        axios.get("https://localhost:7097/Project",{
-            // headers: {
-            //     'Access-Control-Allow-Origin': '*',
-            // },
-        }
-        )
-            .then(data => console.log(data.data));
+        axios.get("https://localhost:7097/Project")
+            .then(projects => {
+                const data = projects.data
+                console.log(data);
+                setProjectsData(data);
+            });
     };
 
 
@@ -89,18 +93,18 @@ const Projects = () => {
             projectsData.map(project => {
                 return (
                     <Card sx={{ 
-                        maxWidth: "350px", 
+                        maxWidth: "290px", 
                         margin: 0, 
                         justifyContent: "space-between",
                         display: "flex",
                         flexDirection: "column",
-                        key: project.id
+                        key: project.Id
                     }}>
                         <CardHeader 
-                            sx={{backgroundColor:"lightYellow"}}
+                            sx={{ bgcolor: "#e9e9e9" }}
                             title={
                                 <Typography variant='subtitle2' color="text.secondary">
-                                    Project ID: {project.id}
+                                    Project ID: {project.Id}
                                     <IconButton 
                                         aria-label="edit"
                                         //onClick={() => props.editEvent(props.event.id)}
@@ -110,10 +114,17 @@ const Projects = () => {
 
                                     
                                     <Typography variant="h6" sx={{color:"black"}}>
-                                        <Link to={"/project/" + project.id}>{project.name}</Link>    
+                                        <Link to={"/project/" + project.Id}>{project.Name}</Link>    
                                     </Typography>
 
-                                    
+                                    <Typography>
+                                        Created: {new Date(project.CreatedDate).toLocaleDateString()}
+                                    </Typography>
+
+                                    <Stack direction="row" spacing={1} sx={{fontWeight:"bold"}}>
+                                        <Chip label={"" + getStatusDescription(project.StatusId)} 
+                                            size="medium" sx={{backgroundColor:"white"}} />
+                                    </Stack>
 
                                 </Typography>
                             }
@@ -128,12 +139,12 @@ const Projects = () => {
                         <CardMedia
                             component="img"
                             height="194"
-                            image={require('../images/' + project.image)}
+                            image={require('../images/' + project.Image)}
                             alt="Paella dish"
                             />
 
                         <CardContent sx={{ }}>
-                            <Typography>{project.description}</Typography>
+                            <Typography>{project.Description}</Typography>
 
                         </CardContent>
 
